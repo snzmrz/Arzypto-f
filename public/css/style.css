@@ -1,0 +1,15 @@
+
+.content{
+    padding-top: 50px;
+}
+.title{
+
+    font-weight: bold;
+}
+.table tr td:nth-child(even){
+    font-weight: bold;
+    text-align: right;
+}
+.table tr:nth-child(even){
+    background: #fef1f5;
+}
