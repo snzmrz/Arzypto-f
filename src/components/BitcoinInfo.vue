@@ -142,6 +142,7 @@
                      var $ = window.jQuery = require('jquery');
                      $("#socket h3").html(msg.bitcoin);
                 };
+
              }
 
         },
