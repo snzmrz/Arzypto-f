@@ -16,8 +16,7 @@
     "core-js": "^3.6.4",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
-    "vue": "^2.6.11",
-    "vue-websocket": "^0.2.3"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",

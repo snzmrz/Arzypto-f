@@ -6,9 +6,9 @@
                     <h3>
                         {{Information.name}}({{Information.symbol}})
                     </h3>
-                    <h1>
-                        {{Information.priceUsd}}
-                    </h1>
+                    <div id="socket">
+                        <h3></h3>
+                    </div>
                 </div>
                 <table class="table">
                     <tbody>
@@ -47,6 +47,7 @@
                     </tbody>
                 </table>
             </div>
+
             <div class="col-md-12 content">
                 <canvas ref="priceUsd"></canvas>
             </div>
@@ -61,19 +62,18 @@
         data() {
             return {
                 Information: '',
-                WebSocket: '',
-                connection:null,
                 ChartInfo:'',
                 Time:[],
                 priceUsd:[],
                 circulatingSupply:[],
+                WebSocket:'',
             }
         },
         methods: {
             GetBicoinInfo() {
                 const axios = require('axios');
                 axios.get('https://api.coincap.io/v2/assets/bitcoin')
-                    .then(response => this.Information = response.data.data)
+                    .then((response) => {this.Information = response.data.data})
                     .catch(err => console.log(err))
             },
             async GetChart(){
@@ -133,40 +133,35 @@
             },
 
 
-            // GetWebSocket(){
-            //     axios.get('wss://relay.arzypto.com/ws')
-            //         .then((response) => {this.WebSocket = response.data;
-            //         console.log(this.WebSocket)
-            //         })
-            //         .catch(err => console.log(err))
-            // },
-
-            // add() {
-            //     // Emit the server side
-            //     this.$socket.emit("add", { a: 5, b: 3 });
-            // },
-            //
-            // get() {
-            //     this.$socket.emit("get", { id: 12 }, (response) => {
-            //
-            //     });
-            // }
-
+             GetWebSocket(){
+                let exampleSocket = new WebSocket('wss://relay.arzypto.com/ws');
+                exampleSocket.onopen = function(){
+                    exampleSocket.send(JSON.stringify(["bitcoin"]))
+                };
+                 exampleSocket.onmessage = function(event){
+                     let msg = JSON.parse(event.data);
+                     this.WebSocket = msg.bitcoin;
+                     var $ = window.jQuery = require('jquery');
+                     $("#socket h3").html(this.WebSocket);
+                     console.log(this.WebSocket)
+                };
+             }
 
         },
-
         async created() {
             this.GetBicoinInfo();
             await this.GetChart();
-            this.DisplayChart()
+            this.DisplayChart();
+            this.GetWebSocket();
         },
+
     }
 </script>
 <style>
 
     .content{
-        padding-top: 50px;
-    }
+             padding-top: 50px;
+         }
     .title{
 
         font-weight: bold;
