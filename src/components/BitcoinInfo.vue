@@ -66,7 +66,6 @@
                 Time:[],
                 priceUsd:[],
                 circulatingSupply:[],
-                WebSocket:'',
             }
         },
         methods: {
@@ -140,10 +139,8 @@
                 };
                  exampleSocket.onmessage = function(event){
                      let msg = JSON.parse(event.data);
-                     this.WebSocket = msg.bitcoin;
                      var $ = window.jQuery = require('jquery');
-                     $("#socket h3").html(this.WebSocket);
-                     console.log(this.WebSocket)
+                     $("#socket h3").html(msg.bitcoin);
                 };
              }
 
